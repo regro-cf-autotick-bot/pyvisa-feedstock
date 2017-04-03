@@ -21,7 +21,7 @@ requirements:
   run:
     - python
     - setuptools
-    - enum34  # [not (py35 or py34)]
+    - enum34  # [py<34]
     - unittest2  # [py26]
 
 test:
