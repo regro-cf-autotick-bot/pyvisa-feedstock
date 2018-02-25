@@ -1,4 +1,4 @@
-{% set name = "pyvisa" %}
+{% set name = "PyVISA" %}
 {% set version = "1.9.0" %}
 {% set sha256 = "38e4a2800122b06441346d8469317f8117ee0d8ce700d12bf5bef337e6c152b5" %}
 
@@ -8,7 +8,7 @@ package:
 
 source:
   fn: {{ name }}-{{ version }}.tar.gz
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.io/packages/source/{{ name[0]|lower }}/{{ name|lower }}/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
 
 build:
