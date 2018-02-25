@@ -1,13 +1,13 @@
-{% set version = "1.8" %}
-{% set sha256 = "52830df5abcc293c2cd027517ee79f4f3005c7e27b8b8f0562b0bd6af8fa5e3a" %}
+{% set version = "1.9.0" %}
+{% set sha256 = "38e4a2800122b06441346d8469317f8117ee0d8ce700d12bf5bef337e6c152b5" %}
 
 package:
   name: pyvisa
   version: {{ version }}
 
 source:
-  fn: {{ version }}.tar.gz
-  url: https://github.com/hgrecco/pyvisa/archive/{{ version }}.tar.gz
+  fn: {{ name }}-{{ version }}.tar.gz
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
 
 build:
@@ -22,7 +22,6 @@ requirements:
     - python
     - setuptools
     - enum34  # [py<34]
-    - unittest2  # [py26]
 
 test:
   imports:
@@ -33,9 +32,9 @@ about:
   license: MIT
   summary: Control your instruments with Python.
   description: |
-    PyVISA is a Python package that enables you to control all kinds of measurement devices 
-    independently of the interface (e.g. GPIB, RS232, USB, Ethernet). As an example, reading 
-    self-identification from a Keithley Multimeter with GPIB number 12 is as easy as three 
+    PyVISA is a Python package that enables you to control all kinds of measurement devices
+    independently of the interface (e.g. GPIB, RS232, USB, Ethernet). As an example, reading
+    self-identification from a Keithley Multimeter with GPIB number 12 is as easy as three
     lines of Python code:
   doc_url: https://pyvisa.readthedocs.io/
   dev_url: https://github.com/hgrecco/pyvisa
@@ -45,3 +44,4 @@ extra:
     - melund
     - ddale
     - cjermain
+    - MatthieuDartiailh
