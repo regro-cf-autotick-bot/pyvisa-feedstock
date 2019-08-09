@@ -32,6 +32,7 @@ test:
 about:
   home: https://github.com/hgrecco/pyvisa
   license: MIT
+  license_file: LICENSE
   summary: Control your instruments with Python.
   description: |
     PyVISA is a Python package that enables you to control all kinds of measurement devices
