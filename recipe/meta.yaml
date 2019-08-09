@@ -1,6 +1,6 @@
 {% set name = "PyVISA" %}
-{% set version = "1.9.1" %}
-{% set sha256 = "d387dd215928bcc40f4ac21f1f344ca7a511ec3e8078f76876fa717174dbb993" %}
+{% set version = "1.10.0" %}
+{% set sha256 = "9133a5c1c28ae30c9846d55039a2361ad9f9f9af21920c1b0310145977afc313" %}
 
 package:
   name: pyvisa
@@ -12,7 +12,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 1000
+  number: 0
   script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
 
 requirements:
@@ -32,6 +32,7 @@ test:
 about:
   home: https://github.com/hgrecco/pyvisa
   license: MIT
+  license_file: LICENSE
   summary: Control your instruments with Python.
   description: |
     PyVISA is a Python package that enables you to control all kinds of measurement devices
