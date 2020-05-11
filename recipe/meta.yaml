@@ -12,8 +12,11 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 2
+  number: 3
   script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
+  entry_points:
+    - pyvisa-info = pyvisa.cmd_line_tools:visa_info
+    - pyvisa-shell = pyvisa.cmd_line_tools:visa_shell
 
 requirements:
   host:
@@ -26,8 +29,12 @@ requirements:
     - enum34  # [py<34]
 
 test:
+  commands:
+    - pyvisa-info
+    - pyvisa-shell -h
   imports:
     - visa
+    - pyvisa
 
 about:
   home: https://github.com/hgrecco/pyvisa
