@@ -15,8 +15,8 @@ build:
   number: 3
   script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
   entry_points:
-    - pyvisa-info = pyvisa.cmd_line_tools:visa_info
-    - pyvisa-shell = pyvisa.cmd_line_tools:visa_shell
+    - pyvisa-info = visa:visa_info
+    - pyvisa-shell = visa:visa_shell
 
 requirements:
   host:
