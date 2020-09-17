@@ -1,6 +1,6 @@
 {% set name = "PyVISA" %}
-{% set version = "1.10.1" %}
-{% set sha256 = "ba936e2943ae29d7e33c3df00077d554c6137b02d097457ed4f36d77977e3293" %}
+{% set version = "1.11.0" %}
+{% set sha256 = "e0a1f363abf08c205969560ccffcfe4d7794f8f00ab5124af610123ac443256f" %}
 
 package:
   name: pyvisa
@@ -12,8 +12,8 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 3
-  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
+  number: 0
+  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv
   entry_points:
     - pyvisa-info = visa:visa_info
     - pyvisa-shell = visa:visa_shell
