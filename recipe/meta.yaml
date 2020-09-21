@@ -24,9 +24,9 @@ requirements:
     - pip
     - setuptools
   run:
-    - python >=3.6
-    - dataclasses  #[py <=36]
-    - importlib_metadata  #[py <=37]
+    - python
+    - dataclasses  # [py <=36]
+    - importlib_metadata  # [py <=37]
     - typing_extensions
 
 test:
