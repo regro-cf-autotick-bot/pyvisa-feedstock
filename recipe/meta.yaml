@@ -15,8 +15,8 @@ build:
   number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv
   entry_points:
-    - pyvisa-info = visa:visa_info
-    - pyvisa-shell = visa:visa_shell
+    - pyvisa-info = pyvisa.cmd_line_tools:visa_info
+    - pyvisa-shell = pyvisa.cmd_line_tools:visa_shell
 
 requirements:
   host:
@@ -24,9 +24,10 @@ requirements:
     - pip
     - setuptools
   run:
-    - python
-    - setuptools
-    - enum34  # [py<34]
+    - python >=3.6
+    - dataclasses  #[py <=36]
+    - importlib_metadata  #[py <=37]
+    - typing_extensions
 
 test:
   commands:
