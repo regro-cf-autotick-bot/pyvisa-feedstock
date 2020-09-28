@@ -53,6 +53,7 @@ about:
   doc_url: https://pyvisa.readthedocs.io/
   dev_url: https://github.com/hgrecco/pyvisa
 
+
 extra:
   recipe-maintainers:
     - melund
