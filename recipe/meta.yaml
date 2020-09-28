@@ -1,6 +1,6 @@
 {% set name = "PyVISA" %}
-{% set version = "1.9.1" %}
-{% set sha256 = "d387dd215928bcc40f4ac21f1f344ca7a511ec3e8078f76876fa717174dbb993" %}
+{% set version = "1.11.0" %}
+{% set sha256 = "e0a1f363abf08c205969560ccffcfe4d7794f8f00ab5124af610123ac443256f" %}
 
 package:
   name: pyvisa
@@ -13,25 +13,37 @@ source:
 
 build:
   number: 0
-  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
+  script:
+    - "{{ PYTHON }} setup.py bdist_wheel --dist-dir=dist"
+    - "{{ PYTHON }} -m pip install --find-links=dist --no-deps --ignore-installed --no-cache-dir -vvv {{ name }}"
+  entry_points:
+    - pyvisa-info = pyvisa.cmd_line_tools:visa_info
+    - pyvisa-shell = pyvisa.cmd_line_tools:visa_shell
 
 requirements:
   host:
     - python
     - pip
     - setuptools
+    - setuptools_scm
   run:
     - python
-    - setuptools
-    - enum34  # [py<34]
+    - dataclasses  # [py <=36]
+    - importlib_metadata  # [py <=37]
+    - typing_extensions
 
 test:
+  commands:
+    - pyvisa-info
+    - pyvisa-shell -h
   imports:
     - visa
+    - pyvisa
 
 about:
   home: https://github.com/hgrecco/pyvisa
   license: MIT
+  license_file: LICENSE
   summary: Control your instruments with Python.
   description: |
     PyVISA is a Python package that enables you to control all kinds of measurement devices
