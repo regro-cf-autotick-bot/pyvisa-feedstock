@@ -1,6 +1,6 @@
 {% set name = "PyVISA" %}
-{% set version = "1.11.0" %}
-{% set sha256 = "e0a1f363abf08c205969560ccffcfe4d7794f8f00ab5124af610123ac443256f" %}
+{% set version = "1.11.1" %}
+{% set sha256 = "38247a5a3d49ea7add8a429d51d5229ab6559343af8ff77fc45fce26891391d3" %}
 
 package:
   name: pyvisa
@@ -53,10 +53,11 @@ about:
   doc_url: https://pyvisa.readthedocs.io/
   dev_url: https://github.com/hgrecco/pyvisa
 
-
 extra:
   recipe-maintainers:
     - melund
     - ddale
     - cjermain
     - MatthieuDartiailh
+    - mtsolmn
+    
