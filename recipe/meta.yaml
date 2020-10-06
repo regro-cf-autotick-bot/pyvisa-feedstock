@@ -40,9 +40,6 @@ test:
     - pyvisa.resources
     - pyvisa.thirdparty
     - pyvisa.testsuite
-    - pyvisa.testsuite.fake-extensions
-    - pyvisa.testsuite.fakelibs
-    - pyvisa.testsuite.keysight_assisted_tests
   commands:
     - pip check
     - pyvisa-info
