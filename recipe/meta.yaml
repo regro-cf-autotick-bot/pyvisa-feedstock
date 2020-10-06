@@ -1,24 +1,23 @@
 {% set name = "PyVISA" %}
-{% set version = "1.11.0" %}
-{% set sha256 = "e0a1f363abf08c205969560ccffcfe4d7794f8f00ab5124af610123ac443256f" %}
+{% set version = "1.11.1" %}
 
 package:
-  name: pyvisa
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
-  url: https://pypi.io/packages/source/{{ name[0]|lower }}/{{ name|lower }}/{{ name }}-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 38247a5a3d49ea7add8a429d51d5229ab6559343af8ff77fc45fce26891391d3
 
 build:
   number: 0
-  script:
-    - "{{ PYTHON }} setup.py bdist_wheel --dist-dir=dist"
-    - "{{ PYTHON }} -m pip install --find-links=dist --no-deps --ignore-installed --no-cache-dir -vvv {{ name }}"
   entry_points:
     - pyvisa-info = pyvisa.cmd_line_tools:visa_info
     - pyvisa-shell = pyvisa.cmd_line_tools:visa_shell
+  script:
+    - "{{ PYTHON }} setup.py bdist_wheel --dist-dir=dist"
+    - "{{ PYTHON }} -m pip install --find-links=dist --no-deps --ignore-installed --no-cache-dir -vvv {{ name }}"
+  skip: True  # [py<36]
 
 requirements:
   host:
@@ -26,19 +25,28 @@ requirements:
     - pip
     - setuptools
     - setuptools_scm
+    - wheel
   run:
     - python
-    - dataclasses  # [py <=36]
-    - importlib_metadata  # [py <=37]
+    - dataclasses  # [py<37]
+    - importlib-metadata  # [py<38]
     - typing_extensions
 
 test:
-  commands:
-    - pyvisa-info
-    - pyvisa-shell -h
   imports:
     - visa
     - pyvisa
+    - pyvisa.ctwrapper
+    - pyvisa.resources
+    - pyvisa.thirdparty
+    - pyvisa.testsuite
+  commands:
+    - pip check
+    - pyvisa-info
+    - pyvisa-shell -h
+  requires:
+    - pip
+    - pytest
 
 about:
   home: https://github.com/hgrecco/pyvisa
@@ -59,3 +67,4 @@ extra:
     - ddale
     - cjermain
     - MatthieuDartiailh
+    - mtsolmn
