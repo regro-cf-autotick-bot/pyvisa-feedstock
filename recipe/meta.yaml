@@ -46,6 +46,7 @@ test:
     - pyvisa-shell -h
   requires:
     - pip
+    - pytest
 
 about:
   home: https://github.com/hgrecco/pyvisa
