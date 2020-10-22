@@ -48,7 +48,6 @@ jobs:
         CONFIG: linux_aarch64_python3.9.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: condaforge/linux-anvil-aarch64
-    maxParallel: 8
   timeoutInMinutes: 360
 
   steps:
