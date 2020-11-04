@@ -13,20 +13,24 @@ source:
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv
+  script:
+    - "{{ PYTHON }} setup.py bdist_wheel --dist-dir=dist"
+    - "{{ PYTHON }} -m pip install --find-links=dist --no-deps --ignore-installed --no-cache-dir -vvv {{ name }}"
   entry_points:
-    - pyvisa-info = visa:visa_info
-    - pyvisa-shell = visa:visa_shell
+    - pyvisa-info = pyvisa.cmd_line_tools:visa_info
+    - pyvisa-shell = pyvisa.cmd_line_tools:visa_shell
 
 requirements:
   host:
     - python
     - pip
     - setuptools
+    - setuptools_scm
   run:
     - python
-    - setuptools
-    - enum34  # [py<34]
+    - dataclasses  # [py <=36]
+    - importlib_metadata  # [py <=37]
+    - typing_extensions
 
 test:
   commands:
