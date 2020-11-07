@@ -1,0 +1,195 @@
+From ccd202a10094bda74f1f93cbe8375fd3598e4ec6 Mon Sep 17 00:00:00 2001
+From: MatthieuDartiailh <marul@laposte.net>
+Date: Fri, 6 Nov 2020 18:07:37 -0500
+Subject: [PATCH] tests: generate the fake dll on the fly to avoid issues with
+ conda packaging
+
+---
+ .../testsuite/fakelibs/fakelib_bad_magic.dll  | Bin 64 -> 0 bytes
+ pyvisa/testsuite/fakelibs/fakelib_good_32.dll | Bin 64 -> 0 bytes
+ pyvisa/testsuite/fakelibs/fakelib_good_64.dll | Bin 64 -> 0 bytes
+ .../testsuite/fakelibs/fakelib_good_64_2.dll  | Bin 64 -> 0 bytes
+ .../fakelibs/fakelib_good_unknown.dll         | Bin 64 -> 0 bytes
+ pyvisa/testsuite/fakelibs/fakelib_not_pe.dll  | Bin 64 -> 0 bytes
+ .../testsuite/fakelibs/generate_fakelibs.py   |  31 --------------
+ pyvisa/testsuite/test_util.py                 |  39 +++++++++++++++---
+ 8 files changed, 34 insertions(+), 36 deletions(-)
+ delete mode 100644 pyvisa/testsuite/fakelibs/fakelib_bad_magic.dll
+ delete mode 100644 pyvisa/testsuite/fakelibs/fakelib_good_32.dll
+ delete mode 100644 pyvisa/testsuite/fakelibs/fakelib_good_64.dll
+ delete mode 100644 pyvisa/testsuite/fakelibs/fakelib_good_64_2.dll
+ delete mode 100644 pyvisa/testsuite/fakelibs/fakelib_good_unknown.dll
+ delete mode 100644 pyvisa/testsuite/fakelibs/fakelib_not_pe.dll
+ delete mode 100644 pyvisa/testsuite/fakelibs/generate_fakelibs.py
+
+diff --git a/pyvisa/testsuite/fakelibs/fakelib_bad_magic.dll b/pyvisa/testsuite/fakelibs/fakelib_bad_magic.dll
+deleted file mode 100644
+index 14f60fbd7c98b037f9025bd02f2390dd60169225..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 64
+VcmeZu3~*&&@L^;i126&g003CY0doKV
+
+diff --git a/pyvisa/testsuite/fakelibs/fakelib_good_32.dll b/pyvisa/testsuite/fakelibs/fakelib_good_32.dll
+deleted file mode 100644
+index 871f014bf4c72816d993bd8d7f008aff2b4172fc..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 64
+VcmeZ`3UFm$@L^;i126&g003U_0gM0u
+
+diff --git a/pyvisa/testsuite/fakelibs/fakelib_good_64.dll b/pyvisa/testsuite/fakelibs/fakelib_good_64.dll
+deleted file mode 100644
+index fcacb4bd7539f1850f0c720a496574f0ab5198c8..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 64
+UcmeZ`3UFm$U|<4bk^x8)08Q}$K>z>%
+
+diff --git a/pyvisa/testsuite/fakelibs/fakelib_good_64_2.dll b/pyvisa/testsuite/fakelibs/fakelib_good_64_2.dll
+deleted file mode 100644
+index 1d2f193547e3709bcea404095822c806401a92d2..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 64
+VcmeZ`3UFm$NNHmr126&g004pg0x19h
+
+diff --git a/pyvisa/testsuite/fakelibs/fakelib_good_unknown.dll b/pyvisa/testsuite/fakelibs/fakelib_good_unknown.dll
+deleted file mode 100644
+index 71feab6419fc51450a19d494d628294b0b6f0b43..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 64
+VcmeZ`3UFm$`2U}Q48R1`0|3Ab13dr$
+
+diff --git a/pyvisa/testsuite/fakelibs/fakelib_not_pe.dll b/pyvisa/testsuite/fakelibs/fakelib_not_pe.dll
+deleted file mode 100644
+index 96be3e422a21a394d8ad999e757d4a5c9e4962c6..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 64
+VcmeZ`a&cu~@L^;i126&g003MF0e}Di
+
+diff --git a/pyvisa/testsuite/fakelibs/generate_fakelibs.py b/pyvisa/testsuite/fakelibs/generate_fakelibs.py
+deleted file mode 100644
+index 5a7998c..0000000
+--- a/pyvisa/testsuite/fakelibs/generate_fakelibs.py
++++ /dev/null
+@@ -1,31 +0,0 @@
+-# -*- coding: utf-8 -*-
+-"""Generate binary files acting as false library files.
+-
+-"""
+-import os
+-import struct
+-
+-dirname = os.path.dirname(__file__)
+-
+-
+-for name, blob in zip(
+-    [
+-        "fakelib_bad_magic.dll",
+-        "fakelib_good_32.dll",
+-        "fakelib_good_64_2.dll",
+-        "fakelib_good_64.dll",
+-        "fakelib_good_unknown.dll",
+-        "fakelib_not_pe.dll",
+-    ],
+-    [
+-        struct.pack("=6sH52sl", b"MAPE\x00\x00", 0x014C, 52 * b"\0", 2),
+-        struct.pack("=6sH52sl", b"MZPE\x00\x00", 0x014C, 52 * b"\0", 2),
+-        struct.pack("=6sH52sl", b"MZPE\x00\x00", 0x8664, 52 * b"\0", 2),
+-        struct.pack("=6sH52sl", b"MZPE\x00\x00", 0x0200, 52 * b"\0", 2),
+-        struct.pack("=6sH52sl", b"MZPE\x00\x00", 0xFFFF, 52 * b"\0", 2),
+-        struct.pack("=6sH52sl", b"MZDE\x00\x00", 0x014C, 52 * b"\0", 2),
+-    ],
+-):
+-    with open(os.path.join(dirname, name), "wb") as f:
+-        f.write(blob)
+-        print("Written %s" % name)
+diff --git a/pyvisa/testsuite/test_util.py b/pyvisa/testsuite/test_util.py
+index f4d661c..84fa3ef 100644
+--- a/pyvisa/testsuite/test_util.py
++++ b/pyvisa/testsuite/test_util.py
+@@ -6,6 +6,7 @@ import array
+ import contextlib
+ import logging
+ import os
++import struct
+ import subprocess
+ import sys
+ import tempfile
+@@ -495,15 +496,42 @@ class TestSystemDetailsAnalysis(BaseTestCase):
+         util.system_details_to_str(details)
+ 
+ 
++def generate_fakelibs(dirname):
++
++    for name, blob in zip(
++        [
++            "fakelib_bad_magic.dll",
++            "fakelib_good_32.dll",
++            "fakelib_good_64_2.dll",
++            "fakelib_good_64.dll",
++            "fakelib_good_unknown.dll",
++            "fakelib_not_pe.dll",
++        ],
++        [
++            struct.pack("=6sH52sl", b"MAPE\x00\x00", 0x014C, 52 * b"\0", 2),
++            struct.pack("=6sH52sl", b"MZPE\x00\x00", 0x014C, 52 * b"\0", 2),
++            struct.pack("=6sH52sl", b"MZPE\x00\x00", 0x8664, 52 * b"\0", 2),
++            struct.pack("=6sH52sl", b"MZPE\x00\x00", 0x0200, 52 * b"\0", 2),
++            struct.pack("=6sH52sl", b"MZPE\x00\x00", 0xFFFF, 52 * b"\0", 2),
++            struct.pack("=6sH52sl", b"MZDE\x00\x00", 0x014C, 52 * b"\0", 2),
++        ],
++    ):
++        with open(os.path.join(dirname, name), "wb") as f:
++            f.write(blob)
++            print("Written %s" % name)
++
++
+ class TestLibraryAnalysis(BaseTestCase):
+     """Test (through monkey patching) the analysis of binary libraries."""
+ 
+-    def test_get_shared_library_arch(self):
++    def test_get_shared_library_arch(self, tmpdir):
+         """Test analysing a library on Windows."""
+-        dirname = os.path.join(os.path.dirname(__file__), "fakelibs")
++        dirname = str(tmpdir)
++        generate_fakelibs(dirname)
++
+         for f, a in zip(["_32", "_64", "_64_2"], ["I386", "IA64", "AMD64"]):
+             arch = util.get_shared_library_arch(
+-                os.path.join(dirname, "fakelib_good%s.dll" % f)
++                os.path.join(tmpdir, "fakelib_good%s.dll" % f)
+             )
+             assert arch == a
+ 
+@@ -520,9 +548,10 @@ class TestLibraryAnalysis(BaseTestCase):
+             util.get_shared_library_arch(os.path.join(dirname, "fakelib_not_pe.dll"))
+         assert "Not a PE executable" in e.exconly()
+ 
+-    def test_get_arch_windows(self):
++    def test_get_arch_windows(self, tmpdir):
+         """Test identifying the computer architecture on windows."""
+-        dirname = os.path.join(os.path.dirname(__file__), "fakelibs")
++        dirname = str(tmpdir)
++        generate_fakelibs(dirname)
+ 
+         platform = sys.platform
+         sys.platform = "win32"
+-- 
+2.23.0
+
