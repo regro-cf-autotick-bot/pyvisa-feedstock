@@ -1,6 +1,6 @@
 {% set name = "PyVISA" %}
-{% set version = "1.10.1" %}
-{% set sha256 = "ba936e2943ae29d7e33c3df00077d554c6137b02d097457ed4f36d77977e3293" %}
+{% set version = "1.11.3" %}
+{% set sha256 = "fb4b601d49fce1a00926fcdde5548bd54f0511f549188a3e0c1e4628c3d86703" %}
 
 package:
   name: pyvisa
@@ -12,21 +12,25 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 4
-  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
+  number: 0
+  script:
+    - "{{ PYTHON }} setup.py bdist_wheel --dist-dir=dist"
+    - "{{ PYTHON }} -m pip install --find-links=dist --no-deps --ignore-installed --no-cache-dir -vvv {{ name }}"
   entry_points:
-    - pyvisa-info = visa:visa_info
-    - pyvisa-shell = visa:visa_shell
+    - pyvisa-info = pyvisa.cmd_line_tools:visa_info
+    - pyvisa-shell = pyvisa.cmd_line_tools:visa_shell
 
 requirements:
   host:
     - python
     - pip
     - setuptools
+    - setuptools_scm
   run:
     - python
-    - setuptools
-    - enum34  # [py<34]
+    - dataclasses  # [py <=36]
+    - importlib_metadata  # [py <=37]
+    - typing_extensions
 
 test:
   commands:
