@@ -7,11 +7,12 @@ package:
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
-  url: https://pypi.io/packages/source/{{ name[0]|lower }}/{{ name|lower }}/{{ name }}-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
-  patches:
-    - 0001-tests-generate-the-fake-dll-on-the-fly-to-avoid-issu.patch
+  git_url: https://github.com/pyvisa/pyvisa.git
+  git_rev: master
+  git_depth: 1
+  # fn: {{ name }}-{{ version }}.tar.gz
+  # url: https://pypi.io/packages/source/{{ name[0]|lower }}/{{ name|lower }}/{{ name }}-{{ version }}.tar.gz
+  # sha256: {{ sha256 }}
 
 build:
   number: 0
